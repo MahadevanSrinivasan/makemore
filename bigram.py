@@ -1,10 +1,10 @@
 from typing import List
-import tensorflow
+import tensorflow as tf
 
 class BigramModel:
     def __init__(self, words : List[str]):
         chars = sorted(list(set(''.join(words))))
-        self.counts_ = [[0] * len(chars)+1 for _ in range(len(chars)+1)]
+        self.counts_ = [[0] * (len(chars)+1) for _ in range(len(chars)+1)]
         self.stoi_ = {s:i+1 for i,s in enumerate(chars)}
         self.stoi_['.'] = 0
         self.itos_ = {i:s for s,i in self.stoi_.items()}
@@ -35,6 +35,7 @@ def generate_name(model):
   return ''.join(results)
 
 if __name__ == '__main__':
+  words = open('names.txt', 'r').read().splitlines()
   tf.random.set_seed(42)
   model = BigramModel(words)
   for i in range(5):
