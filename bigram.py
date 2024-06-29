@@ -23,20 +23,20 @@ class BigramModel:
         ix = tf.random.categorical(p.reshape(1, -1), num_samples=1)[0,0].numpy()
         return self.itos_[ix]
 
-def generate_name(model):
-  prev_token = '.'
-  results = []
-  while True:
-      next_token = model(prev_token)
-      if next_token == '.':
-          break
-      results.append(next_token)
-      prev_token = next_token
-  return ''.join(results)
+    def generate(self):
+      prev_token = '.'
+      results = []
+      while True:
+          next_token = model(prev_token)
+          if next_token == '.':
+              break
+          results.append(next_token)
+          prev_token = next_token
+      return ''.join(results)
 
 if __name__ == '__main__':
   words = open('names.txt', 'r').read().splitlines()
   tf.random.set_seed(42)
   model = BigramModel(words)
   for i in range(5):
-    print(generate_name(model))
+    print(model.generate())
